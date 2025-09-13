@@ -81,4 +81,4 @@ This calculator implements the AAP 2022 Clinical Practice Guideline Revision for
 
 ## Disclaimer
 
-This software is intended for educational and informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment.
+Experimental software intended for educational and informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment.
