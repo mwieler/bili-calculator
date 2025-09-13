@@ -1,0 +1,30 @@
+{
+  "name": "minimal-hyperbili-calculator",
+  "version": "1.0.0",
+  "description": "Minimal standalone hyperbilirubinemia risk calculator with zero external dependencies",
+  "main": "example.ts",
+  "type": "module",
+  "scripts": {
+    "start": "tsx example.ts",
+    "build": "tsc",
+    "dev": "tsx --watch example.ts"
+  },
+  "keywords": [
+    "hyperbilirubinemia",
+    "jaundice",
+    "newborn",
+    "AAP",
+    "clinical",
+    "calculator",
+    "pediatrics"
+  ],
+  "author": "Clinical Resources",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
