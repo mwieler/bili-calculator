@@ -44,6 +44,18 @@ export const HYPERBILI_THRESHOLDS = {
    * different follow-up recommendations apply before/after this age (hours)
    */
   FOLLOW_UP_AGE_THRESHOLD_HOURS: 72,
+
+  /** Minimum gestational age for calculator (weeks) - per AAP guidelines */
+  MIN_GESTATIONAL_AGE_WEEKS: 35,
+
+  /** Maximum gestational age for calculator (weeks) */
+  MAX_GESTATIONAL_AGE_WEEKS: 42,
+
+  /** Minimum TSB value (mg/dL) - cannot be negative */
+  MIN_TSB_MG_DL: 0,
+
+  /** Maximum TSB value (mg/dL) - clinically extreme upper limit */
+  MAX_TSB_MG_DL: 30,
 } as const;
 
 /**

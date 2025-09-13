@@ -126,9 +126,32 @@ try {
   console.log(`✓ Validation caught invalid age: ${error instanceof Error ? error.message : 'Unknown error'}`);
 }
 
+try {
+  assessHyperbiliRisk({
+    gestationalAge: 38,
+    currentAgeHours: 48,
+    currentTSB: -2.5, // Negative TSB value
+    riskFactors: []
+  });
+} catch (error) {
+  console.log(`✓ Validation caught negative TSB: ${error instanceof Error ? error.message.split('.')[0] : 'Unknown error'}`);
+}
+
+try {
+  assessHyperbiliRisk({
+    gestationalAge: 38,
+    currentAgeHours: 48,
+    currentTSB: 35, // TSB above clinical maximum
+    riskFactors: []
+  });
+} catch (error) {
+  console.log(`✓ Validation caught excessive TSB: ${error instanceof Error ? error.message.split('.')[0] : 'Unknown error'}`);
+}
+
 console.log();
 console.log('=== Summary ===');
 console.log('This calculator demonstrates:');
 console.log('• AAP 2022 guideline implementation with reference table lookup');
 console.log('• Clinical decision support with Boolean indicators');
 console.log('• Follow-up recommendations based on AAP Figure 7');
+console.log('• Comprehensive input validation for clinical safety');

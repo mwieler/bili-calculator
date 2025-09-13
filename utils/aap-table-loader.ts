@@ -215,9 +215,23 @@ function determineGestationalAgeKey(table: AapReferenceTable, gestationalAge: nu
     return String(maxKey);
   }
 
-  // If GA is below min available, use the lowest
+  // If GA is below min available, throw an error instead of using fallback
   const minKey = Math.min(...availableKeys);
-  if (flooredGA <= minKey) {
+  if (flooredGA < minKey) {
+    throw new InvalidInputError(
+      `Gestational age ${gestationalAge} weeks is below the minimum supported age of ${minKey} weeks for this reference table. ` +
+        `AAP guidelines only apply to infants ≥35 weeks gestational age.`,
+      {
+        gestationalAge,
+        minSupportedAge: minKey,
+        tableName: table.title,
+        suggestion: 'Use NICU guidelines or specialized preterm calculators for infants <35 weeks'
+      },
+    );
+  }
+
+  // If exactly at min available, use it
+  if (flooredGA === minKey) {
     return String(minKey);
   }
 

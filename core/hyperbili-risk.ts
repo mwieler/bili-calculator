@@ -32,6 +32,92 @@ export { AAP_NEUROTOXICITY_RISK_FACTORS } from './hyperbili-risk-types';
 export type { AapNeurotoxicityRiskFactor } from './hyperbili-risk-types';
 
 // =============================================================================
+// INPUT VALIDATION - Ensure clinical parameters are within acceptable ranges
+// =============================================================================
+
+/**
+ * Validate input parameters for hyperbilirubinemia risk assessment
+ * @param input Input parameters to validate
+ * @throws InvalidInputError if any parameter is outside acceptable clinical range
+ */
+function validateHyperbiliRiskInput(input: HyperbiliRiskInput): void {
+  // Validate gestational age
+  if (input.gestationalAge < HYPERBILI_THRESHOLDS.MIN_GESTATIONAL_AGE_WEEKS) {
+    throw new InvalidInputError(
+      `Gestational age ${input.gestationalAge} weeks is below the minimum of ${HYPERBILI_THRESHOLDS.MIN_GESTATIONAL_AGE_WEEKS} weeks. ` +
+        `This calculator is only validated for infants ≥${HYPERBILI_THRESHOLDS.MIN_GESTATIONAL_AGE_WEEKS} weeks gestational age per AAP guidelines.`,
+      {
+        gestationalAge: input.gestationalAge,
+        minimumGestationalAge: HYPERBILI_THRESHOLDS.MIN_GESTATIONAL_AGE_WEEKS,
+        suggestion: 'For infants <35 weeks gestational age, consult NICU guidelines or specialized preterm calculators',
+      },
+    );
+  }
+
+  if (input.gestationalAge > HYPERBILI_THRESHOLDS.MAX_GESTATIONAL_AGE_WEEKS) {
+    throw new InvalidInputError(
+      `Gestational age ${input.gestationalAge} weeks exceeds the maximum of ${HYPERBILI_THRESHOLDS.MAX_GESTATIONAL_AGE_WEEKS} weeks. ` +
+        `Please verify the gestational age is correct.`,
+      {
+        gestationalAge: input.gestationalAge,
+        maximumGestationalAge: HYPERBILI_THRESHOLDS.MAX_GESTATIONAL_AGE_WEEKS,
+        suggestion: 'Verify gestational age calculation or use alternative assessment for post-term infants',
+      },
+    );
+  }
+
+  // Validate current age in hours
+  if (input.currentAgeHours < HYPERBILI_THRESHOLDS.MIN_AGE_HOURS) {
+    throw new InvalidInputError(
+      `Age ${input.currentAgeHours} hours is below the minimum of ${HYPERBILI_THRESHOLDS.MIN_AGE_HOURS} hour. ` +
+        `Bilirubin assessment is typically not performed in the first hour of life.`,
+      {
+        currentAgeHours: input.currentAgeHours,
+        minimumAgeHours: HYPERBILI_THRESHOLDS.MIN_AGE_HOURS,
+        suggestion: 'Wait until infant is at least 1 hour old for meaningful bilirubin assessment',
+      },
+    );
+  }
+
+  if (input.currentAgeHours > HYPERBILI_THRESHOLDS.MAX_AGE_HOURS) {
+    throw new InvalidInputError(
+      `Age of ${input.currentAgeHours} hours exceeds AAP guideline maximum of ${HYPERBILI_THRESHOLDS.MAX_AGE_HOURS} hours (14 days). ` +
+        `This calculator is only validated for infants ≤14 days old.`,
+      {
+        currentAgeHours: input.currentAgeHours,
+        maxAgeHours: HYPERBILI_THRESHOLDS.MAX_AGE_HOURS,
+        suggestion: 'For infants >14 days old, consult clinical guidelines or use alternative assessment tools',
+      },
+    );
+  }
+
+  // Validate TSB value
+  if (input.currentTSB < HYPERBILI_THRESHOLDS.MIN_TSB_MG_DL) {
+    throw new InvalidInputError(
+      `Total Serum Bilirubin (TSB) ${input.currentTSB} mg/dL cannot be negative. ` +
+        `Please verify the laboratory result.`,
+      {
+        currentTSB: input.currentTSB,
+        minimumTSB: HYPERBILI_THRESHOLDS.MIN_TSB_MG_DL,
+        suggestion: 'Verify laboratory result or check for transcription errors',
+      },
+    );
+  }
+
+  if (input.currentTSB > HYPERBILI_THRESHOLDS.MAX_TSB_MG_DL) {
+    throw new InvalidInputError(
+      `Total Serum Bilirubin (TSB) ${input.currentTSB} mg/dL exceeds the clinical maximum of ${HYPERBILI_THRESHOLDS.MAX_TSB_MG_DL} mg/dL. ` +
+        `This level requires immediate medical attention and may indicate a laboratory error.`,
+      {
+        currentTSB: input.currentTSB,
+        maximumTSB: HYPERBILI_THRESHOLDS.MAX_TSB_MG_DL,
+        suggestion: 'Immediately verify laboratory result and consider urgent clinical intervention',
+      },
+    );
+  }
+}
+
+// =============================================================================
 // PURE FUNCTIONS - Composable hyperbilirubinemia assessment functions
 // =============================================================================
 
@@ -196,6 +282,9 @@ export function generateClinicalGuidance(input: ClinicalGuidanceInput): {
  * ```
  */
 export function assessHyperbiliRisk(input: HyperbiliRiskInput): HyperbiliRiskResult {
+  // Validate input parameters
+  validateHyperbiliRiskInput(input);
+
   // Use age directly
   const ageHours = input.currentAgeHours;
 
