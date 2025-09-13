@@ -1,14 +1,6 @@
-# Minimal Hyperbilirubinemia Risk Calculator
+# Hyperbilirubinemia Risk Calculator
 
-A completely self-contained, minimal implementation of the AAP 2022 hyperbilirubinemia risk calculator with zero external dependencies (except TypeScript for compilation).
-
-## Features
-
-- **Pure calculation functions** - no FHIR, no validation libraries, no external packages
-- **AAP 2022 guidelines** - implements official reference tables and decision logic
-- **Self-contained** - only 11 TypeScript files + 4 JSON data files
-- **Zero runtime dependencies** - just the calculation logic
-- **Complete clinical decision support** - phototherapy, exchange transfusion, follow-up recommendations
+Prototype implementation of the AAP 2022 hyperbilirubinemia risk calculator.
 
 ## Quick Start
 
