@@ -21,7 +21,7 @@ const result = assessHyperbiliRisk({
   gestationalAge: 39,      // weeks
   currentAgeHours: 48,     // hours
   currentTSB: 12.5,        // mg/dL
-  riskFactors: []          // AAP risk factors
+  riskFactors: []          // risk factors
 });
 
 console.log(`Phototherapy needed: ${result.clinicalStatus.requiresPhototherapy}`);
@@ -61,7 +61,7 @@ minimal-hyperbili-calculator/
 - TypeScript (for compilation)
 - tsx (for running examples)
 
-**Runtime:** Zero dependencies - pure calculation logic
+**Runtime:** None
 
 ## Clinical Context
 
