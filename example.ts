@@ -7,7 +7,6 @@
 
 import { assessHyperbiliRisk } from './core/hyperbili-risk';
 
-console.log('=== Minimal Hyperbilirubinemia Risk Calculator ===');
 console.log('Pure calculation functions - zero external dependencies');
 console.log('Based on AAP 2022 Clinical Practice Guidelines');
 console.log();
@@ -25,7 +24,7 @@ const result1 = assessHyperbiliRisk({
 
 console.log('Results:');
 console.log(`• Current TSB: ${result1.currentTSB} mg/dL`);
-console.log(`• Phototherapy threshold: ${result1.thresholds.phototherapy} mg/dL`);
+console.log(`• Phototherapy threshold: ${result1.thresholds.phototherapy.toFixed(1)} mg/dL`);
 console.log(`• Needs phototherapy: ${result1.clinicalStatus.requiresPhototherapy ? 'YES' : 'NO'}`);
 console.log(`• Clinical action: ${result1.clinicalGuidance.immediateAction}`);
 console.log(`• Follow-up: ${result1.clinicalGuidance.followUpRecommendation}`);
@@ -44,9 +43,9 @@ const result2 = assessHyperbiliRisk({
 
 console.log('Results:');
 console.log(`• Current TSB: ${result2.currentTSB} mg/dL`);
-console.log(`• Phototherapy threshold: ${result2.thresholds.phototherapy} mg/dL (lower due to risk factors)`);
+console.log(`• Phototherapy threshold: ${result2.thresholds.phototherapy.toFixed(1)} mg/dL (lower due to risk factors)`);
 console.log(`• Needs phototherapy: ${result2.clinicalStatus.requiresPhototherapy ? 'YES' : 'NO'}`);
-console.log(`• Exchange transfusion threshold: ${result2.thresholds.exchangeTransfusion} mg/dL`);
+console.log(`• Exchange transfusion threshold: ${result2.thresholds.exchangeTransfusion.toFixed(1)} mg/dL`);
 console.log(`• Clinical action: ${result2.clinicalGuidance.immediateAction}`);
 console.log(`• AAP Figure used: ${result2.assessmentContext.aapFigureUsed} (with risk factors)`);
 console.log();
@@ -64,7 +63,7 @@ const result3 = assessHyperbiliRisk({
 
 console.log('Results:');
 console.log(`• Current TSB: ${result3.currentTSB} mg/dL`);
-console.log(`• Phototherapy threshold: ${result3.thresholds.phototherapy} mg/dL`);
+console.log(`• Phototherapy threshold: ${result3.thresholds.phototherapy.toFixed(1)} mg/dL`);
 console.log(`• ABOVE phototherapy by: ${result3.thresholdDifferences.fromPhototherapy.toFixed(1)} mg/dL`);
 console.log(`• Needs phototherapy: ${result3.clinicalStatus.requiresPhototherapy ? '⚠️  YES' : 'NO'}`);
 console.log(`• Needs intensive phototherapy: ${result3.clinicalStatus.requiresIntensivePhototherapy ? 'YES' : 'NO'}`);
@@ -83,10 +82,10 @@ const result4 = assessHyperbiliRisk({
 });
 
 console.log('AAP 2022 Thresholds:');
-console.log(`• Phototherapy: ${result4.thresholds.phototherapy} mg/dL`);
-console.log(`• Escalation of care: ${result4.thresholds.escalationOfCare} mg/dL`);
-console.log(`• Exchange transfusion: ${result4.thresholds.exchangeTransfusion} mg/dL`);
-console.log(`• TcB confirmation: ${result4.thresholds.transcutaneousBilirubinConfirmation} mg/dL`);
+console.log(`• Phototherapy: ${result4.thresholds.phototherapy.toFixed(1)} mg/dL`);
+console.log(`• Escalation of care: ${result4.thresholds.escalationOfCare.toFixed(1)} mg/dL`);
+console.log(`• Exchange transfusion: ${result4.thresholds.exchangeTransfusion.toFixed(1)} mg/dL`);
+console.log(`• TcB confirmation: ${result4.thresholds.transcutaneousBilirubinConfirmation.toFixed(1)} mg/dL`);
 console.log();
 
 console.log('Clinical Status Indicators:');
@@ -129,10 +128,7 @@ try {
 
 console.log();
 console.log('=== Summary ===');
-console.log('This minimal calculator demonstrates:');
-console.log('• Pure calculation functions with zero external dependencies');
+console.log('This calculator demonstrates:');
 console.log('• AAP 2022 guideline implementation with reference table lookup');
 console.log('• Clinical decision support with Boolean indicators');
 console.log('• Follow-up recommendations based on AAP Figure 7');
-console.log('• Comprehensive error handling and validation');
-console.log('• Self-contained with only 11 source files + 4 JSON data files');
